@@ -21,8 +21,8 @@ export default function Table({ searchData }) {
   ];
 
   const [checkedItems, setCheckedItems] = useState(initialChecks);
-  const [checkBoxs, setcheckBoxs] = useState({});
-
+  const [Book, setBook] = useState({})
+  const [showModal, setshowModal] = useState(false);
   const urlBase = "https://api.itbook.store/1.0/search/";
 
   const getBooksSearch = async () => {
@@ -46,23 +46,40 @@ export default function Table({ searchData }) {
   }, [searchData, Page]);
 
   const handleChangeChecked = (event) => {
-    const {name,checked}= event.target
-    let index = checkedItems.findIndex((item => item.label===name))
-     let newState =[...checkedItems]
-     newState[index]= checkedItems[index].status= checked
-    setCheckedItems([newState])
-     console.log(checkedItems)
+    const { name, checked } = event.target;
+    let index = checkedItems.findIndex((item) => item.label === name);
+    let newState = [...checkedItems];
+    newState[index] = checkedItems[index].status = checked;
+    setCheckedItems([newState]);
+    console.log(checkedItems);
+  };
+
+  const onchangePageNext = () => {
+    if (Page >= 1) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const toggleModal = (status, book) => {
+    if (status) {
+    setBook(book)
+    setshowModal(status);
+
+    }
+    setshowModal(status);
+
+
     
   };
 
  
 
-  const onchangePageNext = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
 
+  
   const onchangePagePrevious = () => {
-    setPage((prevPage) => prevPage - 1);
+    if (Page > 1) {
+      setPage((prevPage) => prevPage - 1);
+    }
   };
   return (
     <div>
@@ -119,14 +136,17 @@ export default function Table({ searchData }) {
                   </th>
                 </tr>
               </thead>
-              {Books.map((book) => (
-                <tbody>
-                  <Modal book={book} />
+
+            
+                {Books.map((book) => (
+                    <tbody>
+                     
                   <tr>
+                    
                     <td
                       className="w-75"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
+                     
+                      onClick={() => toggleModal(true,book)}
                       className={` ${checkedItems.title ? "d-none" : ""}`}
                     >
                       <a className="text-black"> {book.title}</a>
@@ -144,14 +164,21 @@ export default function Table({ searchData }) {
                       {book.url}
                     </td>
                   </tr>
-                </tbody>
-              ))}
+
+                  
+                  </tbody>
+                ))}
+             
             </table>
           ) : (
             <h1>No se encontraron resultados</h1>
           )}
         </div>
-
+        <Modal
+                      showModal={showModal}
+                      book={Book}
+                      toggleModal={(status) => toggleModal(status)}
+                    />
         <div className="flex-column mx-5 fixed">
           <p className="mt-4">
             <button
@@ -177,7 +204,7 @@ export default function Table({ searchData }) {
               <button
                 type="button"
                 class="btn btn-primary mt-2"
-                onClick={()=>{}}
+                onClick={() => {}}
               >
                 Guardar
               </button>

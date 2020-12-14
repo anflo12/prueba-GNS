@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 export default function CheckBoxs({ name, handleChangeChecked,checked }) {
-  console.log("st",name)
   return (
     <div class="form-check form-check-inline">
       <input
