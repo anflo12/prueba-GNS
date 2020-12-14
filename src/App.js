@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import Table from "./components/Table";
+import React, { useState } from "react";
+import CheckBoxs from "./components/CheckBoxs";
 function App() {
+  const [searchBook, setBook] = useState("");
+  const handleChange = (event) => {
+    setBook(event.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="mx-2">
+      <div className="input-group mt-5">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar libro"
+          onChange={handleChange}
+          value={searchBook}
+        />
+      </div>
+
+      <div className="d-flex flex-row">
+        <Table searchData={searchBook} />
+
+     
+      </div>
     </div>
   );
 }
