@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+for problems in cors use the extension Crossdomain - CORS for google chrome and firefox
+
 ## Available Scripts
 
 In the project directory, you can run:
